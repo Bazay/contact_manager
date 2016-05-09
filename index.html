@@ -30,43 +30,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/2.4.5/backbone.marionette.min.js"></script>
 
     <!-- MARIONETTE -->
+     <!-- Templates -->
+    <script type="text/template" id="contact-list-item">
+      <td><%= firstName %></td>
+      <td><%= lastName %></td>
+      <td>
+        <button class="btn btn-small js-delete">
+          <i class="glyphicon glyphicon-remove"></i>
+          Delete
+        </button>
+      </td>
+    </script>
+    <script type="text/template" id="contact-list">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </script>
+
     <!-- Includes -->
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/entities/contact.js"></script>
-    <!-- Templates -->
-    <script type="text/template" id="contact-list-item">
-      <%= firstName %> <%= lastName %>
-    </script>
+    <script src="./assets/js/apps/contacts/list/list_view.js"></script>
+    <script src="./assets/js/apps/contacts/list/list_controller.js"></script>
 
     <script type='text/javascript'>
-      ContactManager.ContactItemView = Marionette.ItemView.extend({
-        template: "#contact-list-item",
-        tagName: 'li',
-
-        events: {
-          "click p": "alertPhoneNumber"
-        },
-
-        alertPhoneNumber: function(){
-          alert(this.model.escape('phoneNumber'));
-        }
-      });
-
-      ContactManager.ContactsView = Marionette.CollectionView.extend({
-        tagName: "ul",
-        childView: ContactManager.ContactItemView
-      });
-
-      ContactManager.on("start", function(){
-        var contacts = new ContactManager.request("contact:entities");
-
-        var contactsListView = new ContactManager.ContactsView({
-          collection: contacts
-        });
-
-        ContactManager.mainRegion.show(contactsListView);
-      });
-
       ContactManager.start();
     </script>
   </body>
